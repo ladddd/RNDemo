@@ -18,6 +18,11 @@ export default class DataFetchPage extends Component {
         title: 'Gesture Detector'
     });
 
+    _previousLeft = 0;
+    _previousTop = 0;
+    _circleStyles = {};
+    circle = null;
+
     constructor(props) {
         super(props);
         this.state={
@@ -31,10 +36,21 @@ export default class DataFetchPage extends Component {
             vx: 0,
             vy: 0,
         };
+        this._circleStyles = {
+            left: this._previousLeft,
+            top: this._previousTop,
+        };
         this._panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (e, gestureState) => true,
             onMoveShouldSetPanResponder: (e, gestureState) => true,
-            onPanResponderGrant: (e, gestureState) => {},
+            onPanResponderGrant: (e, gestureState) => {
+                this.circle && this.circle.setNativeProps(
+                    {
+                        style:{
+                            backgroundColor: CIRCLE_HIGHLIGHT_COLOR
+                        }
+                    });
+            },
             onPanResponderMove: (e, gestureState) => {
                 this.setState({
                     moveX: gestureState.moveX,
@@ -46,10 +62,32 @@ export default class DataFetchPage extends Component {
                     vx: gestureState.vx,
                     vy: gestureState.vy,
                     numberActiveTouches: gestureState.numberActiveTouches
-                })
+                });
+                this._circleStyles.left = this._previousLeft + gestureState.dx;
+                this._circleStyles.top = this._previousTop + gestureState.dy;
+                this._circleStyles.backgroundColor = CIRCLE_HIGHLIGHT_COLOR;
+                this.circle && this.circle.setNativeProps({
+                    style:this._circleStyles
+                });
             },
-            onPanResponderRelease: this._handlePanResponderEnd,
-            onPanResponderTerminate: this._handlePanResponderEnd,
+            onPanResponderRelease: (e, gestureState) => {
+                this.circle && this.circle.setNativeProps({
+                    style:{
+                        backgroundColor: CIRCLE_COLOR
+                    }
+                });
+                this._previousLeft += gestureState.dx;
+                this._previousTop += gestureState.dy;
+            },
+            onPanResponderTerminate: (e, gestureState) => {
+                this.circle && this.circle.setNativeProps({
+                    style:{
+                        backgroundColor: CIRCLE_COLOR
+                    }
+                });
+                this._previousLeft += gestureState.dx;
+                this._previousTop += gestureState.dy;
+            },
         })
     }
 
@@ -57,6 +95,12 @@ export default class DataFetchPage extends Component {
         return (
             <View style={styles.container}
                   {...this._panResponder.panHandlers}>
+                <View
+                    ref={(circle) => {
+                        this.circle = circle;
+                    }}
+                    style={styles.circle}
+                    {...this._panResponder.panHandlers}/>
                 <Text>
                     {this.state.numberActiveTouches} touches,
                     dx: {this.state.dx},
@@ -67,8 +111,6 @@ export default class DataFetchPage extends Component {
             </View>
         );
     };
-
-
 }
 
 const styles = StyleSheet.create({

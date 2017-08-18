@@ -18,7 +18,8 @@ import {
     StackNavigator,
 } from 'react-navigation';
 import ProfilePage from './jscore/ProfilePage';
-import GesturePage from './jscore/GesturePage'
+import GesturePage from './jscore/GesturePage';
+import ListPage from './jscore/ListPage';
 import ToolbarAndroid from 'ToolbarAndroid';
 import ErrorUtils from 'ErrorUtils';
 
@@ -76,9 +77,14 @@ export default class RNDemo extends Component {
                 <Image style={{width: 300, height: 400} } resizeMode={'contain'}
                        source={require('./jscore/images/test.png')}/>
 
-                <Button title="Jump Profile" color="#999999" onPress={() =>
-                    navigate('Profile', {user : this.state.text})
-                }/>
+                <View style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent: 'space-between'}}>
+                    <Button title="Jump Profile" color="#999999" onPress={() =>
+                        navigate('Profile', {user : this.state.text})
+                    }/>
+                    <Button title="Jump List" color="#999999" onPress={() =>
+                        navigate('List')
+                    }/>
+                </View>
             </View>
         );
     }
@@ -124,7 +130,8 @@ export const App = StackNavigator(
     {
         Home:{screen:RNDemo},
         Profile:{screen:ProfilePage},
-        Gesture:{screen:GesturePage}
+        Gesture:{screen:GesturePage},
+        List:{screen:ListPage},
     },
     {
         swipeEnabled:true,

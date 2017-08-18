@@ -9,6 +9,7 @@ import {
     StyleSheet,
     ToastAndroid,
     TouchableHighlight,
+    Switch,
 } from "react-native";
 import Forecast from './Widget/Forecast';
 
@@ -22,6 +23,7 @@ export default class ProfilePage extends Component {
         this.state={
             zip: '',
             pressing: false,
+            checked:false,
             forecast: {
                 main: 'Clouds',
                 description: 'few clouds',
@@ -116,6 +118,8 @@ export default class ProfilePage extends Component {
                     {/*<Image style={{width: 300, height: 400} } resizeMode={'contain'}*/}
                     {/*source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}/>*/}
                 </View>
+                <Switch onValueChange={(b) => this.setState({checked:b})}
+                        value={this.state.checked}/>
             </Image>
         );
     }
