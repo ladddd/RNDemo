@@ -13,6 +13,7 @@ import {
     View,
     Button,
     TextInput,
+    ToastAndroid,
 } from "react-native";
 import {
     StackNavigator,
@@ -20,6 +21,7 @@ import {
 import ProfilePage from './jscore/ProfilePage';
 import GesturePage from './jscore/GesturePage';
 import ListPage from './jscore/ListPage';
+import FlexPage from './jscore/FlexPage';
 import ToolbarAndroid from 'ToolbarAndroid';
 import ErrorUtils from 'ErrorUtils';
 
@@ -30,7 +32,8 @@ import ErrorUtils from 'ErrorUtils';
 
 export default class RNDemo extends Component {
     static navigationOptions ={
-        title: 'Welcome'
+        title: 'Welcome',
+        header:null //隐藏bar
     };
 
     constructor(props) {
@@ -132,6 +135,7 @@ export const App = StackNavigator(
         Profile:{screen:ProfilePage},
         Gesture:{screen:GesturePage},
         List:{screen:ListPage},
+        Flex:{screen:FlexPage},
     },
     {
         swipeEnabled:true,

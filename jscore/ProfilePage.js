@@ -108,7 +108,18 @@ export default class ProfilePage extends Component {
                                 style={styles.touchable}>
                                 <View style={styles.button}>
                                     <Text style={styles.welcome}>
-                                        {this.state.pressing ? 'EEK!' : 'PUSH ME'}
+                                        {this.state.pressing ? 'EEK!' : 'Gesture Detector'}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                onPressIn={() => {}}
+                                onPressOut={() => {navigate('Flex')}}
+                                style={{height:50, width:100, justifyContent:'center', marginLeft:10}}>
+                                <View style={{justifyContent:'center', backgroundColor:'#ffff00'}}>
+                                    <Text style={[styles.welcome, {color: '#000000'}]}>
+                                        <Strong>Flex</Strong>
                                     </Text>
                                 </View>
                             </TouchableHighlight>
