@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 
 import {
-    AppRegistry,
     View,
     Text,
     TextInput,
@@ -12,60 +11,21 @@ import {
     Switch,
 } from "react-native";
 import Forecast from './Widget/Forecast';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from './actions/ProfilePageActions';
 
-export default class ProfilePage extends Component {
+export class ProfilePage extends Component {
     static navigationOptions =({ navigation }) => ({
         title: navigation.state.params.user + '\'s Profile'
     });
 
     constructor(props) {
         super(props);
-        this.state={
-            zip: '',
-            pressing: false,
-            checked:false,
-            forecast: {
-                main: 'Clouds',
-                description: 'few clouds',
-                temp: 45.7
-            }
-        }
-    }
-
-    _handleSubmit(location) {
-        //在这里尝试state读写都有问题
-        // var location = this.state.forecast.main;
-        fetch('http://jandan.net/?oxwlxojflwblxbsapi=jandan.get_ooxx_comments?page=1')
-            .then((response) => response.json())
-            .then((responseJSON) => {
-                this.setState({
-                    forecast: {
-                        main: responseJSON.status,
-                        description: responseJSON.status,
-                        temp: responseJSON.count
-                    }
-                })
-            })
-            .catch((error) => {
-
-            })
-    }
-
-    _onPressIn() {
-        //在这里尝试state读写都有问题 ??
-        this.setState({
-            pressing:true
-        })
-    }
-
-    _onPressOut() {
-        this.setState({
-            pressing:false
-        })
     }
 
     render() {
-        const {params} = this.props.navigation.state;
+        const { zip, pressing, checked, forecast } = this.props.profile;
         const { navigate } = this.props.navigation;
         return (
             <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
@@ -74,23 +34,23 @@ export default class ProfilePage extends Component {
                 <View style={styles.container}>
                     <View style={styles.container}>
                         <Text style={styles.welcome}>
-                            You input {this.state.zip}.
+                            You input { zip }.
                         </Text>
                         <Text style={{textAlign:'center', color:'#ffffff'}}>
                             The quick <Text style={{fontStyle: "italic"}}>brown</Text> fox
                             <Strong> jumped</Strong> over the lazy <Text style={{fontWeight: "bold"}}>dog</Text>.
                         </Text>
                         <Forecast
-                            main={this.state.forecast.main}
-                            description={this.state.forecast.description}
-                            temp={this.state.forecast.temp}/>
+                            main={forecast.main}
+                            description={forecast.description}
+                            temp={forecast.temp}/>
                         <TextInput
                             style={styles.input}
                             returnKeyType='search'
                             underlineColorAndroid='#ffffff'
-                            onSubmitEditing={event => this._handleSubmit(event)}
+                            onSubmitEditing={event => this.props.actions.fetchProfileData()}
                             onChangeText= {
-                                (text) => this.setState({zip:text})
+                                (text) => this.props.actions.setZip(text)
                             }
                         />
                         <View style={{
@@ -100,15 +60,15 @@ export default class ProfilePage extends Component {
                             marginTop:10,
                         }}>
                             <TouchableHighlight
-                                onPressIn={() => this.setState({pressing:true})}
+                                onPressIn={() => this.props.actions.setPressing(true)}
                                 onPressOut={() => {
-                                    this.setState({pressing:false});
+                                    this.props.actions.setPressing(false);
                                     navigate('Gesture')
                                 }}
                                 style={styles.touchable}>
                                 <View style={styles.button}>
                                     <Text style={styles.welcome}>
-                                        {this.state.pressing ? 'EEK!' : 'Gesture Detector'}
+                                        {pressing ? 'EEK!' : 'Gesture Detector'}
                                     </Text>
                                 </View>
                             </TouchableHighlight>
@@ -126,11 +86,9 @@ export default class ProfilePage extends Component {
                         </View>
 
                     </View>
-                    {/*<Image style={{width: 300, height: 400} } resizeMode={'contain'}*/}
-                    {/*source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}/>*/}
                 </View>
-                <Switch onValueChange={(b) => this.setState({checked:b})}
-                        value={this.state.checked}/>
+                <Switch onValueChange={(b) => this.props.actions.setChecked(b)}
+                        value={ checked }/>
             </Image>
         );
     }
@@ -185,4 +143,15 @@ const styles = StyleSheet.create({
     },
 });
 
-AppRegistry.registerComponent('ProfilePage', () => ProfilePage);
+const mapStateToProps = (state) => {
+    return {
+        profile: state.profilePageReducer,
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
