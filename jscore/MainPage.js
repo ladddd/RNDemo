@@ -21,7 +21,7 @@ import * as Actions from './actions/MainPageActions';
 export class MainPage extends Component {
     static navigationOptions ={
         title: 'Welcome',
-        header:null //隐藏bar
+        header:null, //隐藏bar
     };
 
     constructor(props) {

@@ -17,7 +17,7 @@ import * as Actions from './actions/ProfilePageActions';
 
 export class ProfilePage extends Component {
     static navigationOptions =({ navigation }) => ({
-        title: navigation.state.params.user + '\'s Profile'
+        // title: navigation.state.params.user + '\'s Profile'
     });
 
     constructor(props) {

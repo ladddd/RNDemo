@@ -7,7 +7,7 @@ import GesturePage from '../GesturePage';
 import ListPage from '../ListPage';
 import FlexPage from '../FlexPage';
 import {StackNavigator} from 'react-navigation'
-
+//普通架构的，使用StackNavigator
 export const Route = {
     Home:{screen:MainPage},
     Profile:{screen:ProfilePage},

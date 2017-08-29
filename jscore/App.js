@@ -6,7 +6,7 @@ import {connect, Provider} from 'react-redux'
 import React, {Component} from 'react'
 import {addNavigationHelpers} from 'react-navigation'
 import {store} from './store/store'
-import {AppNavigator} from './route/route'
+import {AppNavigator} from './route/tabRoute'
 
 const mapStateToProps = (state) => ({
     nav: state.navReducer,
