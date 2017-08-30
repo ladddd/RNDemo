@@ -1,7 +1,7 @@
 /**
  * Created by 陈伟达 on 2017/8/25.
  */
-import {AppNavigator} from '../route/tabRoute'
+import {AppNavigator} from '../route/route'
 
 const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Home'));
 

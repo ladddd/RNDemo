@@ -6,9 +6,11 @@ import {combineReducers} from 'redux';
 import mainPageReducer from './MainPageReducer'
 import navReducer from './NavReducer'
 import profilePageReducer from './ProfilePageReducer'
+import tabReducer from './tabReducer'
 
 export default combineReducers({
     mainPageReducer,
     navReducer,
     profilePageReducer,
+    tabReducer,
 });
