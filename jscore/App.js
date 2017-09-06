@@ -2,8 +2,9 @@
  * Created by 陈伟达 on 2017/8/22.
  */
 'use strict';
-import {connect, Provider} from 'react-redux'
 import React, {Component} from 'react'
+import {NativeModules} from 'react-native'
+import {connect, Provider} from 'react-redux'
 import {addNavigationHelpers} from 'react-navigation'
 import {store} from './store/store'
 import {AppNavigator} from './route/route'
@@ -21,6 +22,10 @@ class App extends Component {
                     state:this.props.nav
                 })}/>
         )
+    }
+
+    componentDidMount() {
+        NativeModules.SplashScreen.hide();
     }
 }
 

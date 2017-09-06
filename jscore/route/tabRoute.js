@@ -17,6 +17,7 @@ export const Route = {
     Flex:{screen:FlexPage},
 };
 
+//Deprecated 演示tavNavigator的实现
 export const AppNavigator = TabNavigator(
     Route,
     {

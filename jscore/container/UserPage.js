@@ -48,7 +48,8 @@ export default class MessagePage extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex:1
+        flex:1,
+        backgroundColor:theme.pageBackgroundColor
     },
     userInfo:{
         marginTop:68,

@@ -7,6 +7,7 @@ import {Dimensions, Platform, StatusBar} from 'react-native';
 import { px2dp } from '../utils/dimenUtils';
 
 export default {
+    pageBackgroundColor: '#f4f4f4',
     screenHeight: Dimensions.get('window').height,
     screenWidth: Dimensions.get('window').width,
     touchableOpacityActiveOpacity: 0.8,
