@@ -13,15 +13,12 @@ import {
 import theme from './constants/theme'
 import {px2dp} from './utils/dimenUtils'
 import ClearableInput from './Widget/ClearableInput'
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import * as Actions from './actions/LoginAction';
 import Urls from './network/Urls'
 import Http from './network/Http'
 import {hex_md5} from './utils/md5Utils'
 import global from './global/global'
 
-class LoginPage extends Component {
+export default class LoginPage extends Component {
     static navigationOptions ={
         header:null, //隐藏bar
     };
@@ -44,18 +41,12 @@ class LoginPage extends Component {
                 'username': this.state.account,
                 'password': hex_md5(this.state.password)
             }).then(data => {
-                // ToastAndroid.show(JSON.stringify(data), ToastAndroid.LONG)
-                console.log(data);
                 console.log(data.appAk);
                 global.accessToken = data.appAk;
                 this.props.navigation.navigate('Home')
             }).catch(exception => {
-                ToastAndroid.show(exception.Message, ToastAndroid.SHORT)
+                ToastAndroid.show(JSON.stringify(exception), ToastAndroid.LONG)
             });
-
-            // Http.get(Urls.allMediaType).then(data => {
-            //     ToastAndroid.show(JSON.stringify(data), ToastAndroid.LONG)
-            // })
         }
     }
 
@@ -131,16 +122,3 @@ const styles = StyleSheet.create({
         color:'white',
     }
 });
-
-const mapStateToProps = (state) => {
-    return {
-        login: state.loginReducer,
-    }
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(Actions, dispatch)
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -39,7 +39,7 @@ class BottomTabBar extends Component {
                 tabBarStyle={[styles.tabBarStyle, {backgroundColor: 'white'}]} //TODO 接入主题管理后再配置颜色属性
                 sceneStyle={{
                     paddingTop: theme.toolbar.paddingTop, //沉浸式
-                    paddingBottom: styles.tabBarStyle.height}}>
+                    paddingBottom: px2dp(45)}}>
                 {this._renderItem(MediaPage, 'Home', '媒体排期', require('../images/media.png'), require('../images/media_selected.png'))}
                 {this._renderItem(OrderPage, 'Profile', '订单', require('../images/bill.png'), require('../images/bill_selected.png'))}
                 {this._renderItem(MessagePage, 'List', '消息中心', require('../images/message.png'), require('../images/message_selected.png'))}

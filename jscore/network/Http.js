@@ -5,6 +5,7 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import Header from './Header'
 import Urls from './Urls'
 import global from '../global/global'
+import fetchWithTimeout from './fetchWithTimeout'
 
 function post(url, body) {
     return httpRequest({
@@ -46,11 +47,12 @@ function httpRequest(props) {
     }
 
     return new Promise((resolve, reject) => {
-        fetch(props.url, {
+        fetchWithTimeout(5000, fetch(props.url, {
             method: props.method,
             headers: headers,
             body:props.body
-        }).then(res => {
+        }))
+        .then(res => {
             console.log(res);
             handleResult(resolve, reject, res, props)
         }).catch(errorMessage => {

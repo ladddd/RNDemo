@@ -7,12 +7,12 @@ import mainPageReducer from './MainPageReducer'
 import navReducer from './NavReducer'
 import profilePageReducer from './ProfilePageReducer'
 import tabReducer from './tabReducer'
-import loginReducer from './loginReducer'
+import messageReducer from './MessageReducer'
 
 export default combineReducers({
     mainPageReducer,
     navReducer,
     profilePageReducer,
     tabReducer,
-    loginReducer
+    messageReducer
 });
